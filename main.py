@@ -63,7 +63,9 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     max_message_length = 4096
 
     # If the output is shorter than the maximum message length, send it directly
-    if len(output) <= max_message_length:
+    if(output):
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="No output")
+    elif len(output) <= max_message_length:
         await context.bot.send_message(chat_id=update.effective_chat.id, text=output)
     else:
         # Split the output into chunks and send them as separate messages
