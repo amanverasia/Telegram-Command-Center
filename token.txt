@@ -1,1 +1,1 @@
-Put your api-token here
+{replace this line with the api_token}
