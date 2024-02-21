@@ -2,7 +2,7 @@
 Telegram-Command-Center is a python script that when executed on the target device can give you access to their command shell in your telegram bot.
 
 ## Scenario
-![[Drawing 2024-02-21 13.04.22.excalidraw.png]]
+![](https://raw.githubusercontent.com/amanverasia/Telegram-Command-Center/master/Drawing%202024-02-21%2013.04.22.excalidraw.png)
 
 Obviously the above comic is generalizing a lot of things but you get the gist, don't you? Now you might be asking how can you use it.
 
